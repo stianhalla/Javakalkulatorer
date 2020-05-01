@@ -29,9 +29,9 @@ public class Kalkulatorer extends Application{
     final static int VIN_Y = 500; 
     
     //1. Kalkulator paneler
-    KoffeinDødlighetPanel kdp = new KoffeinDødlighetPanel(); 
-    Macro macroPanel = new Macro(); 
-    ClassKonvertering konverter = new ClassKonvertering();
+    KoffeinDødlighetPanel kdp; 
+    Macro macroPanel; 
+    ClassKonvertering konverter;
     
     //2. Knapper 
     Button btnKoffein = new Button("Koffein"); 
@@ -41,9 +41,18 @@ public class Kalkulatorer extends Application{
     @Override
     public void start(Stage vindu) throws Exception {
         //3. set handling på kanpp
-        btnKoffein.setOnAction(e -> visKalkulator(kdp, VIN_X, VIN_Y, "Koffein dødelighet kalkulator"));
-        btnMacro.setOnAction(e -> visKalkulator(macroPanel, VIN_X, VIN_Y, "Macro kalkulator"));
-        btnKonverter.setOnAction(e -> visKalkulator(konverter, VIN_X, VIN_Y, "Konverterings kalkulator"));
+        btnKoffein.setOnAction(e -> {
+            kdp = new KoffeinDødlighetPanel();
+            visKalkulator(kdp, 200, 200, "Koffein dødelighet kalkulator");
+                });
+        btnMacro.setOnAction(e -> {
+            macroPanel = new Macro();
+            visKalkulator(macroPanel, VIN_X, VIN_Y, "Macro kalkulator");
+                });
+        btnKonverter.setOnAction(e -> {
+            konverter = new ClassKonvertering();
+            visKalkulator(konverter, VIN_X, VIN_Y, "Konverterings kalkulator");
+                });
         
         //Hoved Panel for visning av knapper 
         FlowPane hovedPanel = new FlowPane(5,5);
