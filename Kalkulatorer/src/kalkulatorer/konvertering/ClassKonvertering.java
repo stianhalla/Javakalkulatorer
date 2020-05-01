@@ -19,22 +19,9 @@ import javafx.scene.layout.VBox;
  * @author finn
  */
 public class ClassKonvertering extends Pane {
-    /*private static double LBS = 2.2046226218;
-    private static double PROTEIN_PER_LBS = 1.1;
-    private static double LOW_FAT = 0.3;
-    private static double MODERATE_FAT = 0.4;
-    private static double HIGH_FAT = 0.6;*/
-
-    //private String[] dietTypes = {"Low-fat", "Moderate-Fat", "High-fat"};
-
-    
     private TextField value1 = new TextField("1");
     private TextField svar = new TextField();
 
-    /*private Label lbCarbs = new Label();
-    private Label lbProtein = new Label();
-    private Label lbFat = new Label();*/
-    
     private ComboBox<String> cbConvertMeter = new ComboBox<>();
     private ComboBox<String> cbConvertMeter2 = new ComboBox<>();
     private String cb1 = "Meter";
@@ -49,6 +36,24 @@ public class ClassKonvertering extends Pane {
     private double dYard  = 0.91;
     private double dTomme = 0.03;
     
+    private TextField value2 = new TextField("1");
+    private TextField svar2 = new TextField();
+    
+    private ComboBox<String> cbConvertLiter = new ComboBox<>();
+    private ComboBox<String> cbConvertLiter2 = new ComboBox<>();
+    
+    private String cb6 = "Liter";
+    private String cb7 = "Gallon";
+    private String cb8 = "Pint";
+    private String cb9 = "Fluid dram";
+    private String cb10 = "Barrel";
+    
+    private double dLiter      = 1.0;
+    private double dGallon     = 0.2642;
+    private double dPint       = 2.113;
+    private double dFluidDram  = 270.5;
+    private double dBarrel     = 0.00629;
+    
     public ClassKonvertering() {
         BorderPane root = new BorderPane();
 
@@ -56,35 +61,95 @@ public class ClassKonvertering extends Pane {
         
         cbConvertMeter.getItems().addAll(cb1);
         cbConvertMeter.setValue(cb1);
-        cbConvertMeter2.getItems().addAll(cb1,cb2,cb3,cb4,cb5);
+        cbConvertMeter2.getItems().addAll(cb2,cb3,cb4,cb5);
         cbConvertMeter2.setValue(cb1);
         
         Button btSubmitMeter = new Button("Beregn");
         
         HBox input = new HBox(10);
         input.setPadding(new Insets(10,10,10,10));
-        input.getChildren().addAll(value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter, svar);
-        root.setTop(input);
+        input.getChildren().addAll(meter, value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter, svar);
         
+        cbConvertLiter.getItems().addAll(cb6);
+        cbConvertLiter.setValue(cb6);
+        cbConvertLiter2.getItems().addAll(cb7,cb8,cb9,cb10);
+        cbConvertLiter2.setValue(cb7);
+        
+        Button btSubmitLiter = new Button("Beregn");
+        
+        Label liter = new Label("Liter");
+        
+        HBox input2 = new HBox(10);
+        input2.setPadding(new Insets(10,10,10,10));
+        input2.getChildren().addAll(liter, value2, cbConvertLiter, cbConvertLiter2, btSubmitLiter, svar2);
+        
+        root.setTop(input);
+        root.setBottom(input2);
+
         getChildren().add(root);
 
-        /*cbDiet.getItems().addAll(dietTypes);
-        cbDiet.setPrefWidth(100);
-        cbDiet.getSelectionModel().selectFirst();
-
-        HBox input = new HBox(10);
-        input.setPadding(new Insets(10,10,10,10));
-        input.getChildren().addAll(tfKg, tfKcal, cbDiet, btSubmitMeter);
-        root.setTop(input);
-
-        VBox output = new VBox(10);
-        output.setPadding(new Insets(10,10,10,10));
-        output.getChildren().addAll(lbProtein, lbCarbs, lbFat);
-        root.setCenter(output);
-
-        getChildren().add(root);*/
-
         btSubmitMeter.setOnAction(e -> calculateMeter());
+        btSubmitLiter.setOnAction(e -> calculateLiter());
+    }
+    
+    public void calculateLiter() {
+        double antall = Double.parseDouble(value2.getText());
+        String meter1 = cbConvertLiter.getValue();
+        String meter2 = cbConvertLiter2.getValue();
+        double value1 = 0.0;
+        double value2 = 0.0;
+        int type = 0;
+        int type2 = 0;
+                
+        switch(meter1) {
+            case "Liter":
+                value1 = dLiter;
+                type = 1;
+                break;
+            case "Gallon":
+                value1 = dGallon;
+                type = 2;
+                break;
+            case "Pint":
+                value1 = dPint;
+                type = 3;
+                break;
+            case "Fluid dram":
+                value1 = dFluidDram;
+                type = 4;
+                break;
+            case "Barrel":
+                value1 = dBarrel;
+                type = 5;
+                break;
+        }
+        
+        switch(meter2) {
+            case "Liter":
+                value2 = dLiter;
+                type = 1;
+                break;
+            case "Gallon":
+                value2 = dGallon;
+                type = 2;
+                break;
+            case "Pint":
+                value2 = dPint;
+                type = 3;
+                break;
+            case "Fluid dram":
+                value2 = dFluidDram;
+                type = 4;
+                break;
+            case "Barrel":
+                value2 = dBarrel;
+                type = 5;
+                break;
+        }
+        
+        double dSvar = antall*value1*value2;
+        System.out.println(dSvar+"");
+        svar2.setText(""+dSvar);
     }
     
     public void calculateMeter() {
@@ -143,7 +208,7 @@ public class ClassKonvertering extends Pane {
         }
         
         double dSvar = antall*value1*value2;
-        System.out.println(svar+"");
+        System.out.println(dSvar+"");
         svar.setText(""+dSvar);
     }
 }
