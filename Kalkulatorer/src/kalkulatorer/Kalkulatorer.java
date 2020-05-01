@@ -51,7 +51,7 @@ public class Kalkulatorer extends Application{
                 });
         btnKonverter.setOnAction(e -> {
             konverter = new ClassKonvertering();
-            visKalkulator(konverter, VIN_X, VIN_Y, "Konverterings kalkulator");
+            visKalkulator(konverter, VIN_X+150, VIN_Y, "Konverterings kalkulator");
                 });
         
         //Hoved Panel for visning av knapper 
