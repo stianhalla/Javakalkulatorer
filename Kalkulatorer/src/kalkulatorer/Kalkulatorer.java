@@ -16,6 +16,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import kalkulatorer.koffein.KoffeinDødlighetPanel;
+import kalkulatorer.konvertering.ClassKonvertering;
+import kalkulatorer.macro.Macro;
+
 
 /**
  *
@@ -25,21 +28,29 @@ public class Kalkulatorer extends Application{
     final static int VIN_X = 500; 
     final static int VIN_Y = 500; 
     
-    //Kalkulator paneler
+    //1. Kalkulator paneler
     KoffeinDødlighetPanel kdp = new KoffeinDødlighetPanel(); 
+    Macro macroPanel = new Macro(); 
+    ClassKonvertering konverter = new ClassKonvertering();
     
-    //Knapper 
-    Button btnKoffeinKalk = new Button("Koffein dødlighet"); 
+    //2. Knapper 
+    Button btnKoffein = new Button("Koffein"); 
+    Button btnMacro = new Button("Macro");
+    Button btnKonverter = new Button("Konverter");
     
     @Override
     public void start(Stage vindu) throws Exception {
-        btnKoffeinKalk.setOnAction(e -> visKoffeinkalk());
+        //3. set handling på kanpp
+        btnKoffein.setOnAction(e -> visKalkulator(kdp, VIN_X, VIN_Y, "Koffein dødelighet kalkulator"));
+        btnMacro.setOnAction(e -> visKalkulator(macroPanel, VIN_X, VIN_Y, "Macro kalkulator"));
+        btnKonverter.setOnAction(e -> visKalkulator(konverter, VIN_X+150, VIN_Y, "Konverterings kalkulator"));
         
+        //Hoved Panel for visning av knapper 
         FlowPane hovedPanel = new FlowPane(5,5);
         hovedPanel.setAlignment(Pos.CENTER);
         
-        //Legger ut knapper 
-        hovedPanel.getChildren().addAll(btnKoffeinKalk); 
+        //4. Legger ut knapper 
+        hovedPanel.getChildren().addAll(btnKoffein, btnMacro, btnKonverter); 
         
         /*Vis GUI*/
         Scene sene = new Scene(hovedPanel, VIN_X, VIN_Y);
@@ -48,10 +59,10 @@ public class Kalkulatorer extends Application{
         vindu.show();
     }
     
-    private void visKoffeinkalk(){
+    private void visKalkulator(Pane panel, int vinx, int viny, String tittel){
         Stage vindu = new Stage(); 
-        Scene sene = new Scene(kdp, VIN_X, VIN_Y); 
-        vindu.setTitle("Koffein dødelighet kalkulator");
+        Scene sene = new Scene(panel, vinx, viny); 
+        vindu.setTitle(tittel);
         vindu.setScene(sene);
         vindu.show();
     }
