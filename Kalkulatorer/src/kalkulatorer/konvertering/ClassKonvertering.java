@@ -28,7 +28,8 @@ public class ClassKonvertering extends Pane {
     //private String[] dietTypes = {"Low-fat", "Moderate-Fat", "High-fat"};
 
     
-    private TextField value1 = new TextField();
+    private TextField value1 = new TextField("1");
+    private TextField svar = new TextField();
 
     /*private Label lbCarbs = new Label();
     private Label lbProtein = new Label();
@@ -42,13 +43,18 @@ public class ClassKonvertering extends Pane {
     private String cb4 = "Yard";
     private String cb5 = "Tomme";
     
+    private double dMeter = 1.0;
+    private double dFot   = 0.3;
+    private double dFavn  = 1.83;
+    private double dYard  = 0.91;
+    private double dTomme = 0.03;
     
     public ClassKonvertering() {
         BorderPane root = new BorderPane();
 
         Label meter = new Label("Meter");
         
-        cbConvertMeter.getItems().addAll(cb1,cb2,cb3,cb4,cb5);
+        cbConvertMeter.getItems().addAll(cb1);
         cbConvertMeter.setValue(cb1);
         cbConvertMeter2.getItems().addAll(cb1,cb2,cb3,cb4,cb5);
         cbConvertMeter2.setValue(cb1);
@@ -57,7 +63,7 @@ public class ClassKonvertering extends Pane {
         
         HBox input = new HBox(10);
         input.setPadding(new Insets(10,10,10,10));
-        input.getChildren().addAll(value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter);
+        input.getChildren().addAll(value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter, svar);
         root.setTop(input);
         
         getChildren().add(root);
@@ -82,6 +88,62 @@ public class ClassKonvertering extends Pane {
     }
     
     public void calculateMeter() {
+        double antall = Double.parseDouble(value1.getText());
+        String meter1 = cbConvertMeter.getValue();
+        String meter2 = cbConvertMeter2.getValue();
+        double value1 = 0.0;
+        double value2 = 0.0;
+        int type = 0;
+        int type2 = 0;
+                
+        switch(meter1) {
+            case "Meter":
+                value1 = dMeter;
+                type = 1;
+                break;
+            case "Fot":
+                value1 = dFot;
+                type = 2;
+                break;
+            case "Favn":
+                value1 = dFavn;
+                type = 3;
+                break;
+            case "Yard":
+                value1 = dYard;
+                type = 4;
+                break;
+            case "Tomme":
+                value1 = dTomme;
+                type = 5;
+                break;
+        }
         
+        switch(meter2) {
+            case "Meter":
+                value2 = dMeter;
+                type2 = 1;
+                break;
+            case "Fot":
+                value2 = dFot;
+                type2 = 2;
+                break;
+            case "Favn":
+                value2 = dFavn;
+                type2 = 3;
+                break;
+            case "Yard":
+                value2 = dYard;
+                type2 = 4;
+                break;
+            case "Tomme":
+                value2 = dTomme;
+                type2 = 5;
+                break;
+        }
+        
+        double dSvar = antall*value1*value2;
+        System.out.println(svar+"");
+        svar.setText(""+dSvar);
     }
 }
