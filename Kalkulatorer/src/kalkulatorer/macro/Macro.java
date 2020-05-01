@@ -32,7 +32,6 @@ public class Macro extends Pane {
     public Macro() {
         BorderPane root = new BorderPane();
 
-
         tfKg.setPromptText("KG");
         tfKg.setPrefWidth(100);
 
