@@ -16,7 +16,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import kalkulatorer.koffein.KoffeinDødlighetPanel;
+import kalkulatorer.konvertering.ClassKonvertering;
 import kalkulatorer.macro.Macro;
+
 
 /**
  *
@@ -29,23 +31,26 @@ public class Kalkulatorer extends Application{
     //1. Kalkulator paneler
     KoffeinDødlighetPanel kdp = new KoffeinDødlighetPanel(); 
     Macro macroPanel = new Macro(); 
+    ClassKonvertering konverter = new ClassKonvertering();
     
     //2. Knapper 
     Button btnKoffein = new Button("Koffein"); 
     Button btnMacro = new Button("Macro");
+    Button btnKonverter = new Button("Konverter");
     
     @Override
     public void start(Stage vindu) throws Exception {
         //3. set handling på kanpp
         btnKoffein.setOnAction(e -> visKalkulator(kdp, VIN_X, VIN_Y, "Koffein dødelighet kalkulator"));
         btnMacro.setOnAction(e -> visKalkulator(macroPanel, VIN_X, VIN_Y, "Macro kalkulator"));
+        btnKonverter.setOnAction(e -> visKalkulator(konverter, VIN_X, VIN_Y, "Konverterings kalkulator"));
         
         //Hoved Panel for visning av knapper 
         FlowPane hovedPanel = new FlowPane(5,5);
         hovedPanel.setAlignment(Pos.CENTER);
         
         //4. Legger ut knapper 
-        hovedPanel.getChildren().addAll(btnKoffein, btnMacro); 
+        hovedPanel.getChildren().addAll(btnKoffein, btnMacro, btnKonverter); 
         
         /*Vis GUI*/
         Scene sene = new Scene(hovedPanel, VIN_X, VIN_Y);
