@@ -5,10 +5,8 @@
  */
 package kalkulatorer;
 
-import java.util.ArrayList;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +16,6 @@ import javafx.stage.Stage;
 import kalkulatorer.koffein.KoffeinDødlighetPanel;
 import kalkulatorer.konvertering.ClassKonvertering;
 import kalkulatorer.macro.Macro;
-
 
 /**
  *
@@ -34,7 +31,7 @@ public class Kalkulatorer extends Application{
     ClassKonvertering konverter = new ClassKonvertering();
     
     //2. Knapper 
-    Button btnKoffein = new Button("Koffein"); 
+    Button btnKoffein = new Button("Koffein");
     Button btnMacro = new Button("Macro");
     Button btnKonverter = new Button("Konverter");
     
@@ -70,5 +67,4 @@ public class Kalkulatorer extends Application{
     public static void main(String[] args) {
         launch(args); 
     }
-    
 }
