@@ -1,7 +1,5 @@
 package kalkulatorer.macro;
 
-import java.util.Arrays;
-import java.util.IllegalFormatException;
 
 /**
  * @author Espen
@@ -31,20 +29,6 @@ public class Helpers {
         return i >= 0;
     }
 
-    /**
-     * Gjør om String til heltall og sjekker om taller er større eller lik 0
-     * @param tall tall som skal sjekkes
-     * @return returnerer tru dersom gitt tall er større eller lik 0
-     */
-    public static boolean erGyldigHeltall(String tall) {
-        int i = 0;
-        try {
-           i =  Integer.parseInt(tall.trim());
-        } catch (IllegalFormatException ex) {
-            return false;
-        }
-        return erGyldigHeltall(i);
-    }
 
     /**
      * Sjekker om et tall er partall
@@ -62,15 +46,4 @@ public class Helpers {
         return true;
     }
 
-    /**
-     * Gjør om setning til ord med stor bokstav som mellomrom
-     * @param str ord som skal endres til camelcase
-     * @return returnerer ord i camelcase
-     */
-    static String tilCamelCase(String str){
-        String[] words = str.split("[-_]");
-        return Arrays.stream(words, 1, words.length)
-                .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1))
-                .reduce(words[0], String::concat);
-    }
 }
