@@ -5,6 +5,7 @@ package annet.oppgaver;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -18,8 +19,7 @@ import java.net.Socket;
  */
 public class Oppgave33_06Klient extends Application {
     public static final int WIN_X = 400;
-    public static final int WIN_Y = 150;
-
+    public static final int WIN_Y = 300;
 
 
     @Override
@@ -37,7 +37,9 @@ public class Oppgave33_06Klient extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
     }
+
 
 
 }
