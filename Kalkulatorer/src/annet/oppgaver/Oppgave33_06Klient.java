@@ -38,6 +38,9 @@ public class Oppgave33_06Klient extends Application {
         primaryStage.show();
 
     }
-
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
 
 }
