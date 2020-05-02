@@ -62,7 +62,7 @@ public class Macro extends Pane {
     private static int calculateCarbs(int kcal, int fat, int protein) {
         return (int) Math.round((kcal - fat * 9 - protein * 4)/4.0);
     }
-    private static int calculateProtein(int kg) {
+    private static int calculateProtein(double kg) {
         return (int)Math.round(kg * LBS * PROTEIN_PER_LBS) ;
     }
     private static int calculateFat(int kcal, double fatamount) {
@@ -71,19 +71,23 @@ public class Macro extends Pane {
 
     private void calculateMacros() {
         // TODO: feilhåndtering
+
         int kcal = 0;
-        int kg = 0;
+        double kg = 0;
 
         try {
             kcal = Integer.parseInt(tfKcal.getText().trim());
         } catch (NumberFormatException ex) {
             System.out.println("feil i kaloriene");
+            AlertBox.displayAlertBox("c");
         }
 
         try {
             kg = Integer.parseInt(tfKg.getText().trim());
         } catch (NumberFormatException ex) {
             System.out.println("feil i kg");
+            AlertBox.displayConfirmBox("c");
+
         }
 
 
