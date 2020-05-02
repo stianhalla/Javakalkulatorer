@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import kalkulatorer.macro.AlertBox;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,7 +21,7 @@ public class AdressePane extends GridPane {
     TextField postnummer;
 
 
-    private DataOutputStream output;
+    private ObjectOutputStream output;
     private ObjectInputStream input;
 
     public AdressePane(){
@@ -67,6 +68,8 @@ public class AdressePane extends GridPane {
         // Rad 4
         this.add(getButtons(),1,3);
 
+        new Thread(() -> kobleTilServer()).start();
+
     }
 
     private HBox getButtons() {
@@ -81,7 +84,62 @@ public class AdressePane extends GridPane {
 
         hBox.getChildren().addAll(add, first, next, previous, last);
 
+        add.setOnAction(e -> leggTilBruker());
+        first.setOnAction(e -> sendTilServer(2));
+        next.setOnAction(e -> sendTilServer(3));
+        previous.setOnAction(e -> sendTilServer(4));
+        last.setOnAction(e -> sendTilServer(5));
+
         return hBox;
+    }
+
+    public void kobleTilServer() {
+        try
+        {
+            Socket socket = new Socket("localhost", 8000);
+            System.out.println("Koblet til server");
+            output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendTilServer(int i) {
+        try {
+            output.writeInt(i);
+            output.flush();
+
+            StudentAdresse studentAdresse = (StudentAdresse) input.readObject();
+            setStudent(studentAdresse);
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void leggTilBruker() {
+        StudentAdresse studentAdresse = null;
+        try {
+            studentAdresse = new StudentAdresse(navn.getText(), gate.getText(), by.getText(), fylke.getText(), postnummer.getText());
+        } catch (UloveligPostnummerUnntak uloveligPostnummerUnntak) {
+            AlertBox.displayAlertBox(uloveligPostnummerUnntak.getMessage());
+        }
+        sendTilServer(1);
+
+        try {
+            output.writeObject(studentAdresse);
+            output.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setStudent(StudentAdresse student) {
+        navn.setText(student.getNavn());
+        by.setText(student.getBy());
+        gate.setText(student.getGate());
+        fylke.setText(student.getFylke());
+        postnummer.setText(student.getPostnummer().toString());
     }
 }
 
