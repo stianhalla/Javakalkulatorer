@@ -5,11 +5,13 @@
  */
 package annet.oppgaver;
 
+import java.io.Serializable;
+
 /**
  *
  * @author drizz
  */
-public class StudetnAdresse {
+public class StudentAdresse implements Serializable{
     private static final int POSTNR_LEN = 4;
     private String navn; 
     private String gate;
@@ -17,7 +19,7 @@ public class StudetnAdresse {
     private String fylke;
     private char[] postnummer;
 
-    public StudetnAdresse(String navn, String gate, String by, String fylke, String postnummer) throws UloveligPostnummerUnntak {
+    public StudentAdresse(String navn, String gate, String by, String fylke, String postnummer) throws UloveligPostnummerUnntak {
         setNavn(navn);
         setGate(gate);
         setBy(by);
@@ -25,7 +27,7 @@ public class StudetnAdresse {
         setPostnummer(postnummer);
     }
 
-    public StudetnAdresse() {
+    public StudentAdresse() {
         //Default
     }
 
@@ -81,6 +83,11 @@ public class StudetnAdresse {
     
     public boolean loveligPostnummer(String postnr){
         return postnr.length() == 4 && postnr.matches("[0-9]+");
+    }
+
+    @Override
+    public String toString() {
+        return "StudetnAdresse";
     }
 
 }
