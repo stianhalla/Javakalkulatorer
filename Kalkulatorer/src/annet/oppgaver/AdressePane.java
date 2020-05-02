@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
+import java.io.*;
+import java.net.Socket;
+
 public class AdressePane extends GridPane {
 
     // Inputs
@@ -15,6 +18,10 @@ public class AdressePane extends GridPane {
     TextField by;
     TextField fylke;
     TextField postnummer;
+
+
+    private DataOutputStream output;
+    private ObjectInputStream input;
 
     public AdressePane(){
         setUp();
@@ -73,6 +80,9 @@ public class AdressePane extends GridPane {
         Button last = new Button("Siste");
 
         hBox.getChildren().addAll(add, first, next, previous, last);
+
         return hBox;
     }
 }
+
+
