@@ -21,12 +21,12 @@ public class Helpers {
     }
 
     /**
-     * Sjekker om et heltall er større eller lik 0
+     * Sjekker om et tall er større eller lik 0
      * @param i tall som skal sjekkes
      * @return returnerer tru dersom gitt tall er større eller lik 0
      */
-    public static boolean erGyldigHeltall(int i) {
-        return i >= 0;
+    public static boolean erGyldigTall(double i) {
+        return i >= 0.0;
     }
 
 
@@ -45,5 +45,22 @@ public class Helpers {
                 return false;
         return true;
     }
+
+    /**
+     * Gjør om et ord til stor forbokstav og resten småe
+     * @param str ord som skal ha stor forbokstav
+     * @return returnerer et ord med stor forbokstav og resten småe
+     */
+    public static String storForbokstav(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+
+
+    /*
+    fjern tegn fra string = bare tall og bokstaver
+    fjern tegn og bokstaver = bare tall
+    fjern tegn og tall = bare bokstaver
+     */
 
 }
