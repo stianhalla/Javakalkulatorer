@@ -5,10 +5,17 @@
  */
 package kalkulatorer.konvertering;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +27,7 @@ import javafx.scene.layout.VBox;
  */
 public class ClassKonvertering extends Pane {
     private TextField value1 = new TextField("1");
-    private TextField svar = new TextField();
+    private TextField svarMeter = new TextField();
 
     private ComboBox<String> cbConvertMeter = new ComboBox<>();
     private ComboBox<String> cbConvertMeter2 = new ComboBox<>();
@@ -30,15 +37,9 @@ public class ClassKonvertering extends Pane {
     private String cb4 = "Yard";
     private String cb5 = "Tomme";
     
-    private double dMeter = 1.0;
-    private double dFot   = 0.3;
-    private double dFavn  = 1.83;
-    private double dYard  = 0.91;
-    private double dTomme = 0.03;
-    
     private TextField value2 = new TextField("1");
-    private TextField svar2 = new TextField();
-    
+    private TextField svarLiter = new TextField();
+        
     private ComboBox<String> cbConvertLiter = new ComboBox<>();
     private ComboBox<String> cbConvertLiter2 = new ComboBox<>();
     
@@ -48,11 +49,12 @@ public class ClassKonvertering extends Pane {
     private String cb9 = "Fluid dram";
     private String cb10 = "Barrel";
     
-    private double dLiter      = 1.0;
-    private double dGallon     = 0.2642;
-    private double dPint       = 2.113;
-    private double dFluidDram  = 270.5;
-    private double dBarrel     = 0.00629;
+    private TextField nettverk = new TextField();
+    Button nettverkButton = new Button("Beregn");
+    ObjectOutputStream toServer = null;
+    ObjectInputStream fromServer = null;
+    
+    String sendToServer = "convert;";
     
     public ClassKonvertering() {
         BorderPane root = new BorderPane();
@@ -68,7 +70,7 @@ public class ClassKonvertering extends Pane {
         
         HBox input = new HBox(10);
         input.setPadding(new Insets(10,10,10,10));
-        input.getChildren().addAll(meter, value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter, svar);
+        input.getChildren().addAll(meter, value1, cbConvertMeter, cbConvertMeter2, btSubmitMeter, svarMeter);
         
         cbConvertLiter.getItems().addAll(cb6);
         cbConvertLiter.setValue(cb6);
@@ -81,10 +83,15 @@ public class ClassKonvertering extends Pane {
         
         HBox input2 = new HBox(10);
         input2.setPadding(new Insets(10,10,10,10));
-        input2.getChildren().addAll(liter, value2, cbConvertLiter, cbConvertLiter2, btSubmitLiter, svar2);
+        input2.getChildren().addAll(liter, value2, cbConvertLiter, cbConvertLiter2, btSubmitLiter, svarLiter);
         
+        HBox input3 = new HBox(10);
+        input3.setPadding(new Insets(10,10,10,10));
+        input3.getChildren().addAll(nettverk, nettverkButton);
+
         root.setTop(input);
-        root.setBottom(input2);
+        root.setCenter(input2);
+        root.setBottom(input3);
 
         getChildren().add(root);
 
@@ -92,7 +99,69 @@ public class ClassKonvertering extends Pane {
         btSubmitLiter.setOnAction(e -> calculateLiter());
     }
     
+    public void connectToServer(String sendToServer, String kalkulator) {
+        System.out.println(sendToServer);
+        System.out.println(kalkulator);
+        String svarFraServer = "";
+        
+        try {
+            String host = "localhost";
+            Socket socket = new Socket(host, 8000);
+            
+            ObjectOutputStream toServer = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream fromServer = new ObjectInputStream(socket.getInputStream());
+            toServer.writeObject(sendToServer);
+            
+            
+            toServer.flush();
+            
+            svarFraServer = (String)fromServer.readObject();
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println(e.toString());
+        }
+        catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+        
+        switch(kalkulator) {
+            case "Liter":
+                svarLiter.setText(svarFraServer);
+                break;
+
+            case "Meter":
+                svarMeter.setText(svarFraServer);
+                break;
+        }
+    }
+    
     public void calculateLiter() {
+        System.out.println("Liter");
+        sendToServer += "Liter;";
+        sendToServer += value2.getText() + ";";
+        sendToServer += cbConvertLiter.getValue() + ";";
+        sendToServer += cbConvertLiter2.getValue();
+        System.out.println("LiterEnd");
+        connectToServer(sendToServer, "Liter");
+        
+        // sette String tom så den ikke legger på mer info
+        sendToServer = "convert;";
+    }
+    
+     public void calculateMeter() {
+         System.out.println("Meter");
+        sendToServer += "Meter;";
+        sendToServer += value1.getText() + ";";
+        sendToServer += cbConvertMeter.getValue() + ";";
+        sendToServer += cbConvertMeter2.getValue();
+        System.out.println("MeterEnd");
+        connectToServer(sendToServer, "Meter");
+        
+        // sette String tom så den ikke legger på mer info
+        sendToServer = "convert;";
+     }
+    
+    /*public void calculateLiter() {
         double antall = Double.parseDouble(value2.getText());
         String meter1 = cbConvertLiter.getValue();
         String meter2 = cbConvertLiter2.getValue();
@@ -210,5 +279,5 @@ public class ClassKonvertering extends Pane {
         double dSvar = antall*value1*value2;
         System.out.println(dSvar+"");
         svar.setText(""+dSvar);
-    }
+    }*/
 }
