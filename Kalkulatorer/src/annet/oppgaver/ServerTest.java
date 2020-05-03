@@ -1,5 +1,7 @@
 package annet.oppgaver;
 
+import kalkulatorer.macro.Helpers;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +14,15 @@ public class ServerTest {
     public static ArrayList<StudentAdresse> studnetAdreser = getAdresser();
 
     public static void main(String[] args) throws IOException {
+
+        System.out.println(Helpers.rundAv(10.2011, 2));
+        System.out.println(Helpers.erGyldigOrd("asdÅlsakd"));
+        System.out.println(Helpers.storForbokstav("fasfhodsahf asdf"));
+        System.out.println(Helpers.rundAvTilHeltall(10.4));
+
+
+
+        /*
         ServerSocket serverSocket = new ServerSocket(8000);
 
         Socket socket = serverSocket.accept();
@@ -37,7 +48,7 @@ public class ServerTest {
                 toClient.flush();
             }
         }
-
+        */
     }
 
     public static ArrayList<StudentAdresse> getAdresser() {

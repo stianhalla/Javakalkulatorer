@@ -40,12 +40,13 @@ public final class Helpers {
 
     /**
      * Sjekker om et ord kunn inneholder gyldige bokstaver
-     * @param ord ord som skal sjekkes
+     * @param str ord som skal sjekkes
      * @return returnerer true dersom ordet inneholder kunn gyldige bokstaver
      */
-    public static boolean erGyldigOrd(String ord) {
+    public static boolean erGyldigOrd(String str) {
+        String ord = str.trim().toUpperCase();
         for(int i = 0; i < ord.length(); i++) {
-            char tegn = ord.trim().toUpperCase().charAt(i);
+            char tegn = ord.charAt(i);
             if(!Character.isLetter(tegn))
                 return false;
         }
@@ -53,11 +54,11 @@ public final class Helpers {
     }
 
     /**
-     * Sjekker om et tall er partall
+     * Sjekker om et tall er primtall
      * @param n tall som skal sjekkes
-     * @return returnerer true dersom tallet er partall
+     * @return returnerer true dersom tallet er primtall
      */
-    public static boolean erPartall(int n) {
+    public static boolean erPrimtall(int n) {
         if (n == 2)
             return true;
 
@@ -66,6 +67,15 @@ public final class Helpers {
             if (n % i == 0 && i != 1)
                 return false;
         return true;
+    }
+
+    /**
+     * Sjekker om et tall er partall eller oddetall
+     * @param n heltall
+     * @return true dersom tallet er partall
+     */
+    public static boolean erPartall(int n) {
+        return n % 2 == 0;
     }
 
     /**
