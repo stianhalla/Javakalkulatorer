@@ -47,7 +47,7 @@ public class Main extends Application{
     private void settOppGUI(Stage vindu) {
         /***Noder***/
         bil = new Bil(SpillBrett.START_POS.getX(), 
-                SpillBrett.START_POS.getY(), 0, 0);
+                SpillBrett.START_POS.getY(), Bil.stille);
         lbTid = new TidBrukt("Tid brukt: ");
         
         /***Spillebrett***/
@@ -83,13 +83,13 @@ public class Main extends Application{
 
     private void settOppSpillKontroll(KeyEvent e) {
        if(e.getCode() == KeyCode.UP)
-           bil.setHastighet(new Point2D(0, -5));
+           bil.setHastighet(bil.opp);
        else if(e.getCode() == KeyCode.DOWN)
-           bil.setHastighet(new Point2D(0, 5));
+           bil.setHastighet(bil.ned);
        else if(e.getCode() == KeyCode.LEFT)
-           bil.setHastighet(new Point2D(-5, 0));
+           bil.setHastighet(bil.venstre);
        else if(e.getCode() == KeyCode.RIGHT)
-           bil.setHastighet(new Point2D(5, 0));
+           bil.setHastighet(bil.høyre);
     }
     
 }

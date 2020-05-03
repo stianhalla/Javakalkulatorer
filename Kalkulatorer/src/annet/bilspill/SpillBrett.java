@@ -25,17 +25,18 @@ public class SpillBrett extends Pane{
     public static ArrayList<Rectangle> vegger = new ArrayList<>(); 
     public static ArrayList<Rectangle> mål = new ArrayList<>();
     public static ArrayList<Rectangle> start = new ArrayList<>();
+    public static ArrayList<Rectangle> boost = new ArrayList<>();
     public static ArrayList<Rectangle2D> veggHitbokser = new ArrayList<>(); 
     public static final int [][] BANE = {
         {1,1,1,1,1,1,1,1,1,1},
-        {1,2,0,0,0,0,0,0,0,1},
+        {1,2,0,0,0,0,0,0,5,1},
         {1,2,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,0,0,1},
-        {1,0,0,0,0,3,1,0,0,1},
+        {1,5,0,0,0,3,1,0,0,1},
         {1,0,0,0,0,3,1,0,0,1},
         {1,0,0,1,1,1,1,0,0,1},
-        {1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,1},
+        {1,0,5,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,5,0,1},
         {1,1,1,1,1,1,1,1,1,1}
     };
     
@@ -44,6 +45,7 @@ public class SpillBrett extends Pane{
         styleVegger();
         styleMål();
         styleStart();
+        styleBoost();
         visBane();
     }
 
@@ -60,6 +62,9 @@ public class SpillBrett extends Pane{
                 else if(BANE[kol][rad] == 3){
                    mål.add(new Rectangle(PIXEL * rad, PIXEL * kol, PIXEL, PIXEL));
                 }
+                else if(BANE[kol][rad] == 5){
+                   boost.add(new Rectangle(PIXEL * rad, PIXEL * kol, PIXEL, PIXEL));
+                }
             }
             System.out.println();
         }
@@ -68,6 +73,11 @@ public class SpillBrett extends Pane{
     private void styleVegger(){
         for(Rectangle r : vegger)
             r.setFill(Color.RED);
+    }
+    
+    private void styleBoost(){
+        for(Rectangle r : boost)
+            r.setFill(Color.YELLOW);
     }
     
     private void styleStart(){
@@ -86,6 +96,8 @@ public class SpillBrett extends Pane{
         for(Rectangle r : mål)
             getChildren().add(r);
         for(Rectangle r : start)
+            getChildren().add(r);
+        for(Rectangle r : boost)
             getChildren().add(r);
     }
     
