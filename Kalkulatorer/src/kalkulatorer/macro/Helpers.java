@@ -122,7 +122,6 @@ public final class Helpers {
     }
 
 
-
     // Sjekk for null
 
     // Skal ikke instansieres

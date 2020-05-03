@@ -130,3 +130,5 @@ nbdist/
 
 
 # End of https://www.gitignore.io/api/java,intellij,netbeans
+
+posisjoner.dat
